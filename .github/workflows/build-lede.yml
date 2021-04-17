@@ -59,6 +59,11 @@ jobs:
         run: |
           cd /opt/lede
           echo "src-git lienol https://github.com/Lienol/openwrt-package" >>feeds.conf.default
+          echo "src-git helloworld https://github.com/fw876/helloworld" >>feeds.conf.default
+          echo "src-git passwall https://github.com/xiaorouji/openwrt-passwall" >>feeds.conf.default
+          cd /package/lean/
+          echo "git clone https://github.com/jerrykuku/lua-maxminddb.git"
+          echo "git clone https://github.com/jerrykuku/luci-app-vssr.git"
           ./scripts/feeds clean
           ./scripts/feeds update -a
           rm -rf feeds/lienol/lienol/ipt2socks
@@ -74,7 +79,8 @@ jobs:
           rm -rf package/lean/luci-app-pptp-server
           rm -rf package/lean/luci-app-v2ray-server
           ./scripts/feeds install -a
-          
+
+        
       - name: 自定义配置
         run: |
           cd /opt/lede
@@ -115,7 +121,7 @@ jobs:
           # 
 
           cat >> .config <<EOF
-          CONFIG_TARGET_x86=y
+          CONFIG_TARGET_x86=n
           CONFIG_TARGET_x86_64=y
           CONFIG_TARGET_x86_64_Generic=y
           
@@ -139,8 +145,8 @@ jobs:
 
           # IPv6支持:
           cat >> .config <<EOF
-          CONFIG_PACKAGE_dnsmasq_full_dhcpv6=n
-          CONFIG_PACKAGE_ipv6helper=n
+          CONFIG_PACKAGE_dnsmasq_full_dhcpv6=y
+          CONFIG_PACKAGE_ipv6helper=y
           EOF
 
           # 多文件系统支持:
@@ -164,22 +170,22 @@ jobs:
 
           # 常用LuCI插件选择:
           cat >> .config <<EOF
-          CONFIG_PACKAGE_luci-app-passwall=y
-          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_ipt2socks=y
-          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks=y
-          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_ShadowsocksR=y
-          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_socks=y
-          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_ShadowsocksR_socks=y
-          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_V2ray=y
-          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Trojan=y
-          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Brook=y
-          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_kcptun=y
-          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_haproxy=y
-          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_ChinaDNS_NG=y
-          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_pdnsd=y
-          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_dns2socks=y
-          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_v2ray-plugin=y
-          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_simple-obfs=y
+          #CONFIG_PACKAGE_luci-app-passwall=y
+          #CONFIG_PACKAGE_luci-app-passwall_INCLUDE_ipt2socks=y
+          #CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks=y
+          #CONFIG_PACKAGE_luci-app-passwall_INCLUDE_ShadowsocksR=y
+          #CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_socks=y
+          #CONFIG_PACKAGE_luci-app-passwall_INCLUDE_ShadowsocksR_socks=y
+          #CONFIG_PACKAGE_luci-app-passwall_INCLUDE_V2ray=y
+          #CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Trojan=y
+          #CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Brook=y
+          #CONFIG_PACKAGE_luci-app-passwall_INCLUDE_kcptun=y
+          #CONFIG_PACKAGE_luci-app-passwall_INCLUDE_haproxy=y
+          #CONFIG_PACKAGE_luci-app-passwall_INCLUDE_ChinaDNS_NG=y
+          #CONFIG_PACKAGE_luci-app-passwall_INCLUDE_pdnsd=y
+          #CONFIG_PACKAGE_luci-app-passwall_INCLUDE_dns2socks=y
+          #CONFIG_PACKAGE_luci-app-passwall_INCLUDE_v2ray-plugin=y
+          #CONFIG_PACKAGE_luci-app-passwall_INCLUDE_simple-obfs=y
           CONFIG_PACKAGE_luci-app-firewall=y
           CONFIG_PACKAGE_luci-app-flowoffload=y
           CONFIG_PACKAGE_luci-app-filetransfer=y
